@@ -464,8 +464,11 @@ public class NewJFrame extends javax.swing.JFrame {
         String kodpocztowyregex = "^[0-9]{2}-[0-9]{3}$";
         Pattern postcodepattern = Pattern.compile(kodpocztowyregex);
         Matcher postcodematcher =  postcodepattern.matcher((CharSequence)postcode);
-        if (postcodematcher.matches()){
-        System.out.println("Kod się zgadza");}
+        if ((postcodematcher.matches()) && (!ulica.equals("")) && (!miejscowosc.equals("")) && (!klientid.equals(""))){
+        System.out.println("Kod się zgadza");
+        System.out.println(klientid+" "+miejscowosc+" "+postcode+" "+ulica);
+        
+        }
         else {
             System.out.println("Kod się nie zgadza");
         }
