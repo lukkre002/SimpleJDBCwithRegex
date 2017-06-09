@@ -381,6 +381,11 @@ public class NewJFrame extends javax.swing.JFrame {
         Pattern emailPattern = Pattern.compile(emailstringPattern);
         Matcher emailMatcher = emailPattern.matcher((CharSequence)adresemail);
         String idklienta = jTextField5.getText().toString();
+        Connector konektor= new Connector();
+        Connection con= konektor.polacz();
+        try { 
+        Statement st= con.createStatement();
+        
         
         if(emailMatcher.matches()){
         System.out.println("Adres email pasuje do regexu: "+adresemail);
@@ -389,8 +394,13 @@ public class NewJFrame extends javax.swing.JFrame {
         System.out.println("Jest pusty");}
         
         else {
+            st.executeUpdate("INSERT INTO email (NR_klienta, adres) VALUES ("+idklienta+",\'"+adresemail+"\')");
+            
+            
         } }else {
         System.out.println("Adres email nie pasuje do regexu");}
+        }catch (Exception ex){
+        ex.printStackTrace();}
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
