@@ -8,6 +8,7 @@ package aplikacjabazodanowazawansowane;
 import java.sql.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.parser.DTDConstants;
 
@@ -381,7 +382,8 @@ public class NewJFrame extends javax.swing.JFrame {
         }
          }
          else {
-         System.out.println("Dane nie pasuja do regexu");}
+         System.out.println("Dane nie pasuja do regexu");
+         JOptionPane.showMessageDialog(null, "Podane dane są nie są prawidłowe","Błąd",2);}
         
         
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -440,7 +442,9 @@ public class NewJFrame extends javax.swing.JFrame {
             
             
         } }else {
-        System.out.println("Adres email nie pasuje do regexu");}
+        System.out.println("Adres email nie pasuje do regexu");
+            JOptionPane.showMessageDialog(null, "Wpisany adres email jest nieprawidlowy","Błąd",2);
+        }
         }catch (Exception ex){
         ex.printStackTrace();}
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -457,6 +461,10 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        Connection con;
+        Connector polaczenie= new Connector();
+        con=polaczenie.polacz();
+        Statement s;
         String klientid= jTextField3.getText().toString();
         String miejscowosc= jTextField6.getText().toString();
         String postcode= jTextField7.getText().toString();
@@ -467,10 +475,17 @@ public class NewJFrame extends javax.swing.JFrame {
         if ((postcodematcher.matches()) && (!ulica.equals("")) && (!miejscowosc.equals("")) && (!klientid.equals(""))){
         System.out.println("Kod się zgadza");
         System.out.println(klientid+" "+miejscowosc+" "+postcode+" "+ulica);
+        try {
+            s= con.createStatement();
+            s.executeUpdate("INSERT INTO adres (ID_klient, miejscowosc, postcode, ulica) VALUES ("+klientid+",\'"+miejscowosc+"\',\'"+postcode+"\',"+"\'"+ulica+"\')"); //Zla komenda sql- do poprawy
+        } catch (Exception ex){
+        ex.printStackTrace();}
+        
         
         }
         else {
             System.out.println("Kod się nie zgadza");
+            JOptionPane.showMessageDialog(null, "Kod pocztowy nie pasuje do kraju Polska","Błąd",2);
         }
         
         
